@@ -19,7 +19,8 @@ which just stores bool for on or not for testing.
 """
 try:
     from mtrctrl import Controller
-except ImportError:
+except ImportError as e:
+    print(e)
     from mtrctrltest import Controller
 controller = Controller(21)
 
