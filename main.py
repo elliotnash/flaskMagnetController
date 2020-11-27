@@ -52,10 +52,28 @@ def toggle_em_cb(data):
     pass
 
 
-# get local ipv4 to force flask to run on that address
+"""
+get local ipv4 to force flask to run on that address
+needed bc flask requires a host ip for it to run
+"""
+
+
+def get_ip():
+    s = sk.socket(sk.AF_INET, sk.SOCK_DGRAM)
+    try:
+        # doesn't even have to be reachable
+        s.connect(('10.255.255.255', 1))
+        ip = s.getsockname()[0]
+    except Exception:
+        ip = '127.0.0.1'
+    finally:
+        s.close()
+    return ip
+
+
 if __name__ == '__main__':
-    host_ip = sk.gethostbyname(sk.gethostname())
-    print('running on ip '+host_ip)
+    host_ip = get_ip()
+    print('running on ip ' + host_ip)
     socket.run(app, debug=False, host=host_ip)
 """
 debug mode causes script to restart when run, 
