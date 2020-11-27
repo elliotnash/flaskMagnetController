@@ -75,7 +75,14 @@ def get_ip():
 if __name__ == '__main__':
     host_ip = get_ip()
     print('running on ip ' + host_ip)
-    socket.run(app, debug=False, host=host_ip)
+
+    try:
+        socket.run(app, debug=False, host=host_ip)
+    # need to catch keyboard interrupt to clean up gpio
+    except KeyboardInterrupt:
+        print('exiting - cleaning up gpio')
+        controller.cleanup()
+
 """
 debug mode causes script to restart when run, 
 don't be alarmed by multiple var outputs

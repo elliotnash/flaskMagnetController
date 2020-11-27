@@ -4,7 +4,6 @@ from RPi import GPIO
 class Controller:
 
     def __init__(self, gpio_port: int):
-        GPIO.cleanup()
         GPIO.setmode(GPIO.BCM)
         self.is_on = False
         self.__em_channel = gpio_port
