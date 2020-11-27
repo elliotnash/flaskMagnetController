@@ -1,12 +1,13 @@
 from flask import Flask, render_template, session, copy_current_request_context
 from flask_socketio import SocketIO, emit, disconnect
 from threading import Lock
+import socket as sk
 
 # configure flask vars
 async_mode = None
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'robotics'
-socket_ = SocketIO(app, async_mode=async_mode)
+socket = SocketIO(app, async_mode=async_mode)
 thread = None
 thread_lock = Lock()
 
@@ -22,21 +23,39 @@ except ImportError:
     from mtrctrltest import Controller
 controller = Controller(21)
 
+
 @app.route('/')
 def index():
     return render_template('index.html',
-                           sync_mode=socket_.async_mode)
+                           sync_mode=socket.async_mode)
 
 
-@socket_.on('toggle_em', namespace='/controls')
-def test_message():
-    session['receive_count'] = session.get('receive_count', 0) + 1
-    emit('my_response',
-         {'data': 'I GOT YOUR MESSAGE', 'count': session['receive_count']})
+# need to update client with sensor/em status when connected
+@socket.on('connect')
+def connect():
+    print('Client connected, updating data')
+    socket.emit('response', {'update': {'em_on': controller.is_on}})
 
 
+@socket.on('toggle_em')
+def toggle_em(json):
+    print('received my event: ' + str(json))
+    if json['data']:
+        controller.turn_on()
+    else:
+        controller.turn_off()
+
+    socket.emit('response', {'update': {'em_on': controller.is_on}})
+
+
+def toggle_em_cb(data):
+    pass
+
+
+# get local ipv4 to force flask to run on that address
 if __name__ == '__main__':
-    socket_.run(app, debug=True)
+    host_ip = sk.gethostbyname(sk.gethostname())
+    socket.run(app, debug=False, host=host_ip)
 """
 debug mode causes script to restart when run, 
 don't be alarmed by multiple var outputs
