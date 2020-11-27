@@ -1,6 +1,6 @@
 Flask
 Flask-Login
-Flask-Session=
+Flask-Session
 Flask_SocketIO
 itsdangerous
 Jinja2
