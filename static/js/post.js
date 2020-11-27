@@ -1,8 +1,7 @@
 $(document).ready(function() {
-    //namespace = '/controls';
-    var socket = io('http://' + document.domain + ':' + location.port);
+    let socket = io('http://' + document.domain + ':' + location.port);
 
-    var em_state = false;
+    let em_state = false;
 
     /*socket.on('connect', function() {
         socket.emit('connect', {data: 'connected to the SocketServer...'});

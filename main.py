@@ -25,9 +25,18 @@ except ImportError as e:
 controller = Controller(21)
 
 
+"""
+webroot returns index.html as template. Scripts/ccs need to be in static folder
+and html needs needs to be in template folder. js need to be loaded in html
+with this notation: 
+<script src="{{url_for('static', filename='file_relative_to_static_folder.js')}}"></script>
+css:
+<link rel="stylesheet" href="{{ url_for('static', filename='file_relative_to_static_folder.css') }}" />
+"""
+
 @app.route('/')
 def index():
-    return render_template('index.html',
+    return render_template('indexcss.html',
                            sync_mode=socket.async_mode)
 
 
@@ -62,7 +71,8 @@ needed bc flask requires a host ip for it to run
 def get_ip():
     s = sk.socket(sk.AF_INET, sk.SOCK_DGRAM)
     try:
-        # doesn't even have to be reachable
+        """socket hostnames on some linux systems return 127.0.0.1
+        so try making connection and check socket """
         s.connect(('10.255.255.255', 1))
         ip = s.getsockname()[0]
     except Exception:
@@ -79,6 +89,7 @@ if __name__ == '__main__':
     try:
         socket.run(app, debug=False, host=host_ip)
     # need to catch keyboard interrupt to clean up gpio
+    # not sure if theres a better way to do this like an exit hook in python
     except KeyboardInterrupt:
         pass
     except Exception as e:

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/FontAwesome.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/checkbox.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Navigation-Clean.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+    <nav class="navbar navbar-light navbar-expand-md navigation-clean">
+        <div class="container"><a class="navbar-brand" href="#">BLUE ROV INSTRUMENT DASHBOARD</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div
+                class="collapse navbar-collapse" id="navcol-1">
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link active" href="#">Controls</a></li>
+                    <li class="nav-item"></li>
+                    <li class="nav-item"></li>
+                </ul>
+        </div>
+        </div>
+    </nav>
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12" style="margin-bottom: 20px;margin-top: 20px;"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card" style="border-width: 3px;border-radius: 7px;background: #eeeeee;">
+                        <div class="card-body" style="border-radius: 10px;padding: 20px;border-style: none;padding-bottom: 10px;text-align: center;">
+                            <h4 class="card-title">Electromagnet</h4>
+                            <h6 class="text-muted card-subtitle mb-2">status: off</h6><ul class="ks-cboxtags">
+    <li><input type="checkbox" id="checkboxOne" value="Rainbow Dash"><label for="checkboxOne">Turn on</label></li>
+</ul></div>
+                    </div>
+                </div>
+                <div class="col-md-4" style="height: 300px;"></div>
+                <div class="col-md-4"></div>
+            </div>
+        </div>
+    </div>
+	
+	<!-- Scripts bellow -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script src="{{url_for('static', filename='js/post.js')}}"></script>
+</body>
+
+</html>
