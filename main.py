@@ -80,6 +80,10 @@ if __name__ == '__main__':
         socket.run(app, debug=False, host=host_ip)
     # need to catch keyboard interrupt to clean up gpio
     except KeyboardInterrupt:
+        pass
+    except Exception as e:
+        print(e)
+    finally:
         print('exiting - cleaning up gpio')
         controller.cleanup()
 
