@@ -84,7 +84,7 @@ def get_ip():
 
 if __name__ == '__main__':
     host_ip = get_ip()
-    print('running on ip ' + host_ip)
+    print('running on ip ' + host_ip+':5000')
 
     try:
         socket.run(app, debug=False, host=host_ip)
